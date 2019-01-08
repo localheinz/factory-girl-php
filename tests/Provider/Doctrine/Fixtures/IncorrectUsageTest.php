@@ -8,11 +8,11 @@ class IncorrectUsageTest extends TestCase
      */
     public function throwsWhenTryingToDefineTheSameEntityTwice()
     {
-        $factory = $this->factory->defineEntity('SpaceShip');
+        $factory = $this->factory->defineEntity(TestEntity\SpaceShip::class);
         
         $this->expectException(\Exception::class);
         
-        $factory->defineEntity('SpaceShip');
+        $factory->defineEntity(TestEntity\SpaceShip::class);
     }
     
     /**
@@ -30,11 +30,11 @@ class IncorrectUsageTest extends TestCase
      */
     public function throwsWhenTryingToDefineEntitiesThatAreNotEntities()
     {
-        $this->assertTrue(class_exists('FactoryGirl\Tests\Provider\Doctrine\Fixtures\TestEntity\NotAnEntity', true));
+        $this->assertTrue(class_exists(TestEntity\NotAnEntity::class, true));
 
         $this->expectException(\Exception::class);
         
-        $this->factory->defineEntity('NotAnEntity');
+        $this->factory->defineEntity(TestEntity\NotAnEntity::class);
     }
     
     /**
@@ -44,7 +44,7 @@ class IncorrectUsageTest extends TestCase
     {
         $this->expectException(\Exception::class);
         
-        $this->factory->defineEntity('SpaceShip', array(
+        $this->factory->defineEntity(TestEntity\SpaceShip::class, array(
             'pieType' => 'blueberry'
         ));
     }
@@ -54,11 +54,11 @@ class IncorrectUsageTest extends TestCase
      */
     public function throwsWhenTryingToGiveNonexistentFieldsWhileConstructing()
     {
-        $this->factory->defineEntity('SpaceShip', array('name' => 'Alpha'));
+        $this->factory->defineEntity(TestEntity\SpaceShip::class, array('name' => 'Alpha'));
 
         $this->expectException(\Exception::class);
 
-        $this->factory->get('SpaceShip', array(
+        $this->factory->get(TestEntity\SpaceShip::class, array(
             'pieType' => 'blueberry'
         ));
     }
@@ -68,10 +68,10 @@ class IncorrectUsageTest extends TestCase
      */
     public function throwsWhenTryingToGetLessThanOneInstance()
     {
-        $this->factory->defineEntity('SpaceShip');
+        $this->factory->defineEntity(TestEntity\SpaceShip::class);
 
         $this->expectException(\Exception::class);
 
-        $this->factory->getList('SpaceShip', array(), 0);
+        $this->factory->getList(TestEntity\SpaceShip::class, array(), 0);
     }
 }
